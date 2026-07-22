@@ -9,5 +9,4 @@ elif 18 <= age <= 64:
 else:
     category = "Senior"
 
-print(f'Age: {age}')
-print(f'Category: {category}')
+print(f'You are a {category}')
