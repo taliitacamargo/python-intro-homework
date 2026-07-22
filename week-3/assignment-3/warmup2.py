@@ -1,10 +1,13 @@
 age = int(input(f'Enter your age: '))
 
 if 0 <= age <= 12: 
-    print("You are a child")
+    category = "Child"
 elif 13 <= age <= 17:
-    print("You are a teen")
+    category = "Teen"
 elif 18 <= age <= 64:
-    print("You are an adult")
+    category = "Adult"
 else:
-    print("You are a senior")
+    category = "Senior"
+
+print(f'Age: {age}')
+print(f'Category: {category}')

@@ -8,16 +8,15 @@ daylight = ['morning', 'afternoon', 'evening']
 
 
 if day not in weekday or time not in daylight:
-    print("I don't recognize that day or time, " 
-    "please use weekdays like monday, tuesday,"
-    " or saturday and times like morning, afternoon, or evening.")
+    print("I don't recognize that day or that time. "
+          "Please use days like monday, tuesday, or saturday "
+          "and times like morning, afternoon, or evening.")
 elif day not in weekday: 
-    print("I don't recognize that day or time, " \
-    "please use weekdays like monday, tuesday,"
-    " or saturday")
+    print("I don't recognize that day. "
+          "Please use days like monday, tuesday, or saturday.")
 elif time not in daylight: 
-    print("I dont recognize that time," \
-    "please use times like morning, afternoon, or evening.")
+    print("I don't recognize that time. "
+          "Please use times like morning, afternoon, or evening.")
 else: 
 
     if day == "monday" and time == "morning":
