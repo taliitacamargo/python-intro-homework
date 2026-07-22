@@ -18,6 +18,7 @@ elif time not in daylight:
     print("I don't recognize that time. "
           "Please use times like morning, afternoon, or evening.")
 else: 
+    print(f"You chose {day} in the {time}. Here's a suggestion:")
 
     if day == "monday" and time == "morning":
         print("Suggestion: Time to get some breakfast and get ready to work! " \
