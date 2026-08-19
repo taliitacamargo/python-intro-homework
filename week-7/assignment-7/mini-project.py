@@ -2,7 +2,7 @@ import csv
 import os
 from datetime import date
 
-path = os.path.join('data', 'expenses.csv')
+path = os.path.join('..', 'data', 'expenses.csv')
 
 if not os.path.exists(path):
     print(f"Error: {path} not found.")
