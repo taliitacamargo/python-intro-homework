@@ -40,7 +40,39 @@ def parse_pokemon(data):
     return pokemon
 
 
+def display_pokemon(pokemon):
+    """Print one Pokemon's parsed data in a readable format."""
+    print("---------------------------")
+    print("Name:", pokemon["name"].title())
+    print("Height:", pokemon["height"])
+    print("Weight:", pokemon["weight"])
+    print("Types:", ", ".join(pokemon["types"]))
+    print("Stats:")
+    for stat_name in pokemon["stats"]:
+        print(" ", stat_name, ":", pokemon["stats"][stat_name])
+    print("---------------------------")
+
+
+def main():
+    print("Welcome to the PokeDex CLI!")
+    print("Type a Pokemon name to look it up, or type 'quit' to exit.")
+
+    while True:
+        name = input("\nPokemon name: ")
+
+        if name.lower() == "quit":
+            print("Goodbye!")
+            break
+
+        if name.strip() == "":
+            print("Please type a Pokemon name.")
+            continue
+
+        data = fetch_pokemon(name)
+        if data:
+            pokemon = parse_pokemon(data)
+            display_pokemon(pokemon)
+
+
 if __name__ == "__main__":
-    data = fetch_pokemon("pikachu")
-    if data:
-        print(parse_pokemon(data))
+    main()
