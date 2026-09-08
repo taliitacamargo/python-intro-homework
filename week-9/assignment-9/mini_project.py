@@ -1,50 +1,33 @@
-import os
 import sys
 
 import requests
 
-API_URL = "https://api.restcountries.com/countries/v5"
-API_KEY = os.environ.get("RESTCOUNTRIES_API_KEY")
-PAGE_LIMIT = 100
+API_URL = "https://restcountries.com/v3.1/all?fields=name,capital,region,population"
 
 
 def fetch_countries():
-    headers = {"Authorization": f"Bearer {API_KEY}"}
-    params = {
-        "response_fields": "names.official,capitals,region,population",
-        "limit": PAGE_LIMIT,
-        "offset": 0,
-    }
-
-    objects = []
     try:
-        while True:
-            response = requests.get(API_URL, headers=headers, params=params, timeout=10)
-
-            if response.status_code != 200:
-                print(f"Error: Server responded with status code {response.status_code}.")
-                sys.exit(1)
-
-            payload = response.json()["data"]
-            objects.extend(payload["objects"])
-
-            if not payload["meta"]["more"]:
-                break
-            params["offset"] += PAGE_LIMIT
+        response = requests.get(API_URL, timeout=10)
     except requests.exceptions.RequestException:
         print("Error: Could not reach the server. Check your connection and try again.")
         sys.exit(1)
 
+    if response.status_code != 200:
+        print(f"Error: Server responded with status code {response.status_code}.")
+        sys.exit(1)
+
+    data = response.json()
+
     countries = []
-    for obj in objects:
-        capitals = obj.get("capitals") or []
-        capital = capitals[0]["name"] if capitals else "N/A"
+    for item in data:
+        capital_list = item.get("capital")
+        capital = capital_list[0] if capital_list else "N/A"
         countries.append(
             {
-                "name": obj.get("names", {}).get("official", "N/A"),
+                "name": item["name"]["common"],
                 "capital": capital,
-                "region": obj.get("region", "N/A"),
-                "population": obj.get("population", 0),
+                "region": item.get("region", "N/A"),
+                "population": item.get("population", 0),
             }
         )
     return countries
