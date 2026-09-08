@@ -2,7 +2,6 @@ import requests
 
 
 def fetch_pokemon(name):
-    """Get raw Pokemon data from the PokeAPI. Returns None if something goes wrong."""
     url = "https://pokeapi.co/api/v2/pokemon/" + name.lower()
 
     try:
@@ -19,7 +18,6 @@ def fetch_pokemon(name):
 
 
 def parse_pokemon(data):
-    """Pull out the fields we care about from the raw API data into a simple dict."""
     types = []
     for type_entry in data.get("types", []):
         types.append(type_entry["type"]["name"])
@@ -41,7 +39,6 @@ def parse_pokemon(data):
 
 
 def display_pokemon(pokemon):
-    """Print one Pokemon's parsed data in a readable format."""
     print("---------------------------")
     print("Name:", pokemon["name"].title())
     print("Height:", pokemon["height"])
