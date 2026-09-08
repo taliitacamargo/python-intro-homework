@@ -18,7 +18,29 @@ def fetch_pokemon(name):
     return response.json()
 
 
+def parse_pokemon(data):
+    """Pull out the fields we care about from the raw API data into a simple dict."""
+    types = []
+    for type_entry in data.get("types", []):
+        types.append(type_entry["type"]["name"])
+
+    stats = {}
+    for stat_entry in data.get("stats", []):
+        stat_name = stat_entry["stat"]["name"]
+        stat_value = stat_entry["base_stat"]
+        stats[stat_name] = stat_value
+
+    pokemon = {
+        "name": data.get("name", "unknown"),
+        "height": data.get("height"),
+        "weight": data.get("weight"),
+        "types": types,
+        "stats": stats,
+    }
+    return pokemon
+
+
 if __name__ == "__main__":
     data = fetch_pokemon("pikachu")
     if data:
-        print("Connected! Got data for:", data["name"])
+        print(parse_pokemon(data))
