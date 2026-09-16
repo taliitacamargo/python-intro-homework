@@ -39,4 +39,4 @@ I chose a grouped bar chart because the goal is to compare several discrete, unr
 
 ## Video demo
 
-<!-- Paste your Loom/YouTube link here -->
+https://www.loom.com/share/0421626ddc5b4e898ab9728d75296cde
