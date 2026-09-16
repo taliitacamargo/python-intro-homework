@@ -1,5 +1,7 @@
 import requests
 
+from stats_chart import save_stats_chart
+
 
 def fetch_pokemon(name):
     url = "https://pokeapi.co/api/v2/pokemon/" + name.lower()
@@ -50,9 +52,33 @@ def display_pokemon(pokemon):
     print("---------------------------")
 
 
+def run_compare():
+    names_input = input("Enter 2 or more Pokemon names, separated by commas: ")
+    names = [name.strip() for name in names_input.split(",") if name.strip()]
+
+    if len(names) < 2:
+        print("Please enter at least two Pokemon names to compare.")
+        return
+
+    pokemon_list = []
+    for name in names:
+        data = fetch_pokemon(name)
+        if data:
+            pokemon_list.append(parse_pokemon(data))
+
+    if len(pokemon_list) < 2:
+        print("Could not fetch enough valid Pokemon to build a chart.")
+        return
+
+    filepath = save_stats_chart(pokemon_list)
+    print("Saved stat comparison chart to", filepath)
+
+
 def main():
     print("Welcome to the PokeDex CLI!")
-    print("Type a Pokemon name to look it up, or type 'quit' to exit.")
+    print("Type a Pokemon name to look it up.")
+    print("Type 'compare' to chart base stats across several Pokemon.")
+    print("Type 'quit' to exit.")
 
     while True:
         name = input("\nPokemon name: ")
@@ -60,6 +86,10 @@ def main():
         if name.lower() == "quit":
             print("Goodbye!")
             break
+
+        if name.lower() == "compare":
+            run_compare()
+            continue
 
         if name.strip() == "":
             print("Please type a Pokemon name.")
