@@ -1,4 +1,6 @@
 import os
+import subprocess
+import sys
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -43,4 +45,15 @@ def save_stats_chart(pokemon_list, output_dir=CHARTS_DIR):
     fig.savefig(filepath)
     plt.close(fig)
 
+    open_chart(filepath)
+
     return filepath
+
+
+def open_chart(filepath):
+    if sys.platform == "darwin":
+        subprocess.run(["open", filepath], check=False)
+    elif sys.platform == "win32":
+        os.startfile(filepath)
+    else:
+        subprocess.run(["xdg-open", filepath], check=False)
